@@ -112,12 +112,10 @@ const Result = () => {
                     </div>
                 </div>`;
       list.appendChild(newRow);
-      team
-        .sort((a, b) => b.kudos - a.kudos)
-        .forEach((member) => {
-          let newRow = document.createElement("li");
-          newRow.classList = "c-list__item";
-          newRow.innerHTML = `
+      team.forEach((member) => {
+        let newRow = document.createElement("li");
+        newRow.classList = "c-list__item";
+        newRow.innerHTML = `
                     <div class="c-list__grid" style="display: contents;">
                         <div class="c-flag c-place u-bg--transparent">${
                           member.rank
@@ -136,27 +134,27 @@ const Result = () => {
                         <div class="u-text--right c-kudos">
                             <div class="u-mt--8">
                                 <strong>${member.kudos}</strong>/<strong>${
-            member.deaths
-          }</strong> ${randomEmoji()}
+          member.deaths
+        }</strong> ${randomEmoji()}
                             </div>
                         </div>
                     </div>
                 `;
-          if (member.rank === 1) {
-            newRow.querySelector(".c-place").classList.add("u-text--dark");
-            newRow.querySelector(".c-place").classList.add("u-bg--yellow");
-            newRow.querySelector(".c-kudos").classList.add("u-text--yellow");
-          } else if (member.rank === 2) {
-            newRow.querySelector(".c-place").classList.add("u-text--dark");
-            newRow.querySelector(".c-place").classList.add("u-bg--teal");
-            newRow.querySelector(".c-kudos").classList.add("u-text--teal");
-          } else if (member.rank === 3) {
-            newRow.querySelector(".c-place").classList.add("u-text--dark");
-            newRow.querySelector(".c-place").classList.add("u-bg--orange");
-            newRow.querySelector(".c-kudos").classList.add("u-text--orange");
-          }
-          list.appendChild(newRow);
-        });
+        if (member.rank === 1) {
+          newRow.querySelector(".c-place").classList.add("u-text--dark");
+          newRow.querySelector(".c-place").classList.add("u-bg--yellow");
+          newRow.querySelector(".c-kudos").classList.add("u-text--yellow");
+        } else if (member.rank === 2) {
+          newRow.querySelector(".c-place").classList.add("u-text--dark");
+          newRow.querySelector(".c-place").classList.add("u-bg--teal");
+          newRow.querySelector(".c-kudos").classList.add("u-text--teal");
+        } else if (member.rank === 3) {
+          newRow.querySelector(".c-place").classList.add("u-text--dark");
+          newRow.querySelector(".c-place").classList.add("u-bg--orange");
+          newRow.querySelector(".c-kudos").classList.add("u-text--orange");
+        }
+        list.appendChild(newRow);
+      });
       setApplyed(true);
     } else {
       console.log("the function did not called...");
