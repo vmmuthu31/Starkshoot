@@ -17,7 +17,7 @@ import { useGraph } from "@react-three/fiber";
 import { useAnimations } from "@react-three/drei";
 import { Color, LoopOnce, MeshStandardMaterial } from "three";
 
-
+var i = 0
 export const Scene = ({ mainColor, path, ...props }) => {
   const { scene, materials, animations } = useGLTF(
     "/models/Character_Soldier.gltf"
@@ -66,11 +66,15 @@ export const Scene = ({ mainColor, path, ...props }) => {
     "Sniper",
     "Sniper_2",
   ];
+  i++;
   WEAPONS.forEach((wp) => {
-    const isCurrentWeapon = wp === "AK";
+    const isCurrentWeapon = wp === WEAPONS[i];
     nodes[wp].visible = isCurrentWeapon;
     console.log(isCurrentWeapon, "working... change wepon")
   },[]);
+  if (i>WEAPONS.length){
+    i=0
+  }
 
   return (
     <>
