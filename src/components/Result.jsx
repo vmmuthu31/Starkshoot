@@ -112,10 +112,8 @@ const Result = () => {
                     </div>
                 </div>`;
       list.appendChild(newRow);
-      team = team
-        .sort((a, b) => 
-          b.kudos - a.kudos;
-        )
+      team
+        .sort((a, b) => b.kudos - a.kudos)
         .forEach((member) => {
           let newRow = document.createElement("li");
           newRow.classList = "c-list__item";
