@@ -1,9 +1,60 @@
 import React, { useEffect, useState } from "react";
 import "./../styles/result.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import { Contract, RpcProvider } from "starknet";
+import { feltToString, stringToFelt } from "../../config/util";
+import { useNavigate } from "react-router-dom";
 
 const Result = () => {
+  const connection = useSelector((state) => state.connection);
+
+  console.log("Provider:", connection?.provider);
+  console.log("Address:", connection?.address);
+
+  const navigateTo = useNavigate();
+  useEffect(() => {
+    const registerusr = async () => {
+      console.log(">> interactWithContract started");
+      try {
+        const provider = new RpcProvider({
+          nodeUrl:
+            "https://starknet-goerli.g.alchemy.com/v2/z_ZWlsOXWnNNXqo9hveLbeX4QDNycdA9",
+        });
+        const contAddress =
+          "0x033a0673242efa5828ef505927e595d006dcc00115fa353ccc120a9ed9a653e6";
+        const ContAbi = await provider.getClassAt(contAddress);
+        const newContract = new Contract(
+          ContAbi.abi,
+          contAddress,
+          connection?.provider
+        );
+
+        const address = connection?.address;
+
+        const value = {
+          player1: stringToFelt("blue"),
+          player2: stringToFelt("Military"),
+          winner: stringToFelt("Lamboguni"),
+          points: stringToFelt("white"),
+        };
+        console.log("contract details", newContract);
+        const response = await newContract.update_leaderboard(address, value);
+        console.log(">> firstresponse", response);
+        if (response) {
+          navigateTo("/lobby");
+        }
+        return true;
+      } catch (error) {
+        console.log("error", error);
+        return false;
+      }
+    };
+    registerusr();
+  }, [connection.address]);
+
   // const someValue = JSON.parse(localStorage.getItem('myObject'));
   const someValue = useSelector((state) => state.yourSlice.someValue);
   const [applyed, setApplyed] = useState(false);
@@ -111,6 +162,11 @@ const Result = () => {
     // Find Winner from sent kudos by sorting the drivers in the team array
     // let sortedTeam = team.sort((a, b) => b.kudos - a.kudos);
     let winner = team[0];
+    team.forEach((player) => {
+      if (player.kudos > winner.kudos) {
+        winner = player;
+      }
+    });
 
     // Render winner card
     const winnerCard = document.getElementById("winner");
@@ -123,70 +179,75 @@ const Result = () => {
   }, []);
 
   return (
-    <div className=" bg-[#101010] text-white min-h-screen z-96 l-wrapper">
-      <div className="c-header">
-        {/* <img
+    <>
+      <Navbar />
+      <div className=" bg-[#101010] text-white min-h-screen z-96 l-wrapper">
+        <div className="c-header">
+          {/* <img
             className="c-logo"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/813538/km-logo-color.svg"
             draggable="false"
             /> */}
-        <button className="c-button c-button--primary">
-          <a href="lobby">Lobby</a>
-        </button>
-      </div>
-      <div className="l-grid">
-        <div className="l-grid__item l-grid__item--sticky">
-          <div className="c-card u-bg--light-gradient u-text--dark">
-            <div className="c-card__body">
-              <div className="u-display--flex u-justify--space-between">
-                <div className="u-text--left">
-                  <div className="u-text--small">Room</div>
-                  <h1>{someValue[0].id}</h1>
-                </div>
-                <div className="u-text--right">
-                  <div className="u-text--small">Total bedding</div>
-                  <h2>
-                    {someValue.kills}/{someValue.deaths}
-                  </h2>
+          <button className="c-button c-button--primary">
+            <a href="lobby">Lobby</a>
+          </button>
+        </div>
+        <div className="l-grid">
+          <div className="l-grid__item l-grid__item--sticky">
+            <div className="c-card u-bg--light-gradient u-text--dark">
+              <div className="c-card__body">
+                <div className="u-display--flex u-justify--space-between">
+                  <div className="u-text--left">
+                    <div className="u-text--small">Room</div>
+                    <h1>{someValue[0].id}</h1>
+                  </div>
+                  <div className="u-text--right">
+                    <div className="u-text--small">Total bedding</div>
+                    <h2>
+                      {someValue.kills}/{someValue.deaths}
+                    </h2>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="c-card">
-            <div className="c-card__body">
-              <div className="u-text--center" id="winner" />
+            <div className="c-card">
+              <div className="c-card__body">
+                <div className="u-text--center" id="winner" />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="l-grid__item">
-          <div className="c-card">
-            <div className="c-card__header">
-              <h3>Rank</h3>
-              <select className="c-select">
-                <option selected="selected">RoomId : {someValue[0].id}</option>
-              </select>
-            </div>
-            <div className="c-card__body">
-              <ul className="c-list" id="list">
-                <li className="c-list__item">
-                  <div className="c-list__grid">
-                    <div className="u-text--left u-text--small u-text--medium">
-                      Rank
+          <div className="l-grid__item">
+            <div className="c-card">
+              <div className="c-card__header">
+                <h3>Rank</h3>
+                <select className="c-select">
+                  <option selected="selected">
+                    RoomId : {someValue[0].id}
+                  </option>
+                </select>
+              </div>
+              <div className="c-card__body">
+                <ul className="c-list" id="list">
+                  <li className="c-list__item">
+                    <div className="c-list__grid">
+                      <div className="u-text--left u-text--small u-text--medium">
+                        Rank
+                      </div>
+                      <div className="u-text--left u-text--small u-text--medium">
+                        Name
+                      </div>
+                      <div className="u-text--right u-text--small u-text--medium">
+                        # Kills/Deaths
+                      </div>
                     </div>
-                    <div className="u-text--left u-text--small u-text--medium">
-                      Name
-                    </div>
-                    <div className="u-text--right u-text--small u-text--medium">
-                      # Kills/Deaths
-                    </div>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
