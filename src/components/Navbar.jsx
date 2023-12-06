@@ -114,7 +114,7 @@ function Navbar() {
         >
           <div className="flex space-x-4 lg:flex-1">
             <Link href="/" className="flex space-x-4">
-              <img className="h-14 w-auto" src="../../assets/logo.png" alt="" />
+              <img className="h-16 w-auto" src="../../assets/logo.png" alt="" />
               <p className=" text-3xl font-bold font-serif mt-2">STARKSHOOT</p>
             </Link>
           </div>
