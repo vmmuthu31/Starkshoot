@@ -38,7 +38,6 @@ export const CharacterController = ({
   onKilled,
   onFire,
   downgradedPerformance,
-  playerId,
   ...props
 }) => {
   const [weapon, setWeapon] = useState("AK");
@@ -86,99 +85,7 @@ export const CharacterController = ({
     }
   }, [state.state.health]);
 
-  const [isSpacePressed, setIsSpacePressed] = useState(false);
-  const [isFPressed, setIsFPressed] = useState(false);
-
-  // Set up key event listeners
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.code === "Space") {
-        setIsSpacePressed(true);
-      }
-      if (event.key === "f" || event.key === "F") {
-        setIsFPressed(true);
-      }
-    };
-
-    const handleKeyUp = (event) => {
-      if (event.code === "Space") {
-        setIsSpacePressed(false);
-      }
-      if (event.key === "f" || event.key === "F") {
-        setIsFPressed(false);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-
-    // Clean up event listeners
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-  const [arrowKeys, setArrowKeys] = useState({
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-  });
-
-  // Set up arrow key event listeners
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (state.id !== playerId) return;
-      const newArrowKeys = { ...arrowKeys };
-      if (event.key === "ArrowUp") newArrowKeys.up = true;
-      if (event.key === "ArrowDown") newArrowKeys.down = true;
-      if (event.key === "ArrowLeft") newArrowKeys.left = true;
-      if (event.key === "ArrowRight") newArrowKeys.right = true;
-      setArrowKeys(newArrowKeys);
-    };
-
-    const handleKeyUp = (event) => {
-      if (state.id !== playerId) return;
-      const newArrowKeys = { ...arrowKeys };
-      if (event.key === "ArrowUp") newArrowKeys.up = false;
-      if (event.key === "ArrowDown") newArrowKeys.down = false;
-      if (event.key === "ArrowLeft") newArrowKeys.left = false;
-      if (event.key === "ArrowRight") newArrowKeys.right = false;
-      setArrowKeys(newArrowKeys);
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-
-    // Clean up event listeners
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, [playerId]);
-  const calculateAngle = () => {
-    const { up, down, left, right } = arrowKeys;
-
-    // Adjust angles based on your game's coordinate system
-    if (up && !down) {
-      if (left && !right) return (5 * Math.PI) / 4; // Up-Left
-      if (right && !left) return (7 * Math.PI) / 4; // Up-Right
-      return 0; // Up
-    }
-    if (down && !up) {
-      if (left && !right) return (3 * Math.PI) / 4; // Down-Left
-      if (right && !left) return Math.PI / 4; // Down-Right
-      return Math.PI; // Down
-    }
-    if (left && !right) return (3 * Math.PI) / 2; // Left
-    if (right && !left) return Math.PI / 2; // Right
-
-    return null; // No arrow key pressed
-  };
-
   useFrame((_, delta) => {
-    if (state.id !== playerId) return; // Check if the frame update is for this player
-
     // CAMERA FOLLOW
 
     // if (joystick.isPressed("swap")) {
@@ -214,29 +121,25 @@ export const CharacterController = ({
     }
 
     // Update player position based on joystick state
-    let angle = joystick.isJoystickPressed()
-      ? joystick.angle()
-      : calculateAngle();
-    if (angle !== null) {
+    const angle = joystick.angle();
+    if (joystick.isJoystickPressed() && angle) {
       setAnimation("Run");
       character.current.rotation.y = angle;
 
-      // Movement logic
+      // move character in its own direction
       const impulse = {
         x: Math.sin(angle) * MOVEMENT_SPEED * delta,
         y: 0,
         z: Math.cos(angle) * MOVEMENT_SPEED * delta,
       };
+
       rigidbody.current.applyImpulse(impulse, true);
     } else {
       setAnimation("Idle");
     }
     const playerWorldPos = vec3(rigidbody.current.translation());
 
-    if (
-      (joystick.isPressed("jump") && playerWorldPos.y < 2) ||
-      (isSpacePressed && playerWorldPos.y < 2)
-    ) {
+    if (joystick.isPressed("jump") && playerWorldPos.y < 2) {
       setAnimation("Run");
       character.current.rotation.y = angle;
 
@@ -258,17 +161,22 @@ export const CharacterController = ({
       }
     }
     // Check if fire button is pressed
-    if (isFPressed || joystick.isPressed("fire")) {
-      setAnimation("Run_Shoot");
-      if (isHost() && Date.now() - lastShoot.current > FIRE_RATE) {
-        lastShoot.current = Date.now();
-        const newBullet = {
-          id: state.id + "-" + +new Date(),
-          position: vec3(rigidbody.current.translation()),
-          angle: angle ?? joystick.angle(), // Use the current angle or joystick angle if available
-          player: state.id,
-        };
-        onFire(newBullet);
+    if (joystick.isPressed("fire")) {
+      // fire
+      setAnimation(
+        joystick.isJoystickPressed() && angle ? "Run_Shoot" : "Idle_Shoot"
+      );
+      if (isHost()) {
+        if (Date.now() - lastShoot.current > FIRE_RATE) {
+          lastShoot.current = Date.now();
+          const newBullet = {
+            id: state.id + "-" + +new Date(),
+            position: vec3(rigidbody.current.translation()),
+            angle,
+            player: state.id,
+          };
+          onFire(newBullet);
+        }
       }
     }
 
