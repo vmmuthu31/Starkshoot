@@ -38,6 +38,7 @@ export const CharacterController = ({
   onKilled,
   onFire,
   downgradedPerformance,
+  playerId,
   ...props
 }) => {
   const [weapon, setWeapon] = useState("AK");
@@ -127,6 +128,7 @@ export const CharacterController = ({
   // Set up arrow key event listeners
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (state.id !== playerId) return;
       const newArrowKeys = { ...arrowKeys };
       if (event.key === "ArrowUp") newArrowKeys.up = true;
       if (event.key === "ArrowDown") newArrowKeys.down = true;
@@ -136,6 +138,7 @@ export const CharacterController = ({
     };
 
     const handleKeyUp = (event) => {
+      if (state.id !== playerId) return;
       const newArrowKeys = { ...arrowKeys };
       if (event.key === "ArrowUp") newArrowKeys.up = false;
       if (event.key === "ArrowDown") newArrowKeys.down = false;
@@ -152,7 +155,7 @@ export const CharacterController = ({
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [arrowKeys]);
+  }, [playerId]);
   const calculateAngle = () => {
     const { up, down, left, right } = arrowKeys;
 
@@ -174,6 +177,8 @@ export const CharacterController = ({
   };
 
   useFrame((_, delta) => {
+    if (state.id !== playerId) return; // Check if the frame update is for this player
+
     // CAMERA FOLLOW
 
     // if (joystick.isPressed("swap")) {
