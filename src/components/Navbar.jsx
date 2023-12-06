@@ -8,13 +8,81 @@ import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { WalletDetails } from "./WalletDetails";
 import { useNavigate } from "react-router-dom";
+import { Contract, RpcProvider } from "starknet";
+import { feltToString, stringToFelt } from "../../config/util";
 
 function Navbar() {
   const WW_URL = "https://web.argent.xyz";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  function toBN(value) {
+    try {
+      return BigInt(value);
+    } catch (e) {
+      console.error("Invalid input for toBN:", value);
+      throw e;
+    }
+  }
+
   const [connection, setConnection] = useState();
   const navigate = useNavigate();
+  const setaddr = async () => {
+    console.log(">> interactWithContract started");
+    try {
+      const provider = new RpcProvider({
+        nodeUrl:
+          "https://starknet-goerli.g.alchemy.com/v2/z_ZWlsOXWnNNXqo9hveLbeX4QDNycdA9",
+      });
+      const contAddress =
+        "0x0702d897706745e4f58cfa0a73e28f663bbaf8d1d0022741ec25ebdd4fb4766d";
+      const ContAbi = await provider.getClassAt(contAddress);
+      const newContract = new Contract(
+        ContAbi.abi,
+        contAddress,
+        connection.account
+      );
 
+      const address = connection.account.address;
+      const name = "Vairamuthu";
+      const value = stringToFelt(name);
+
+      console.log("contract details", newContract);
+      const response = await newContract.set(address, value);
+      console.log(">> firstresponse", response);
+      return true;
+    } catch (error) {
+      console.log("error", error);
+      return false;
+    }
+  };
+  const getaddr = async () => {
+    console.log(">> interactWithContract started");
+    try {
+      const provider = new RpcProvider({
+        nodeUrl:
+          "https://starknet-goerli.g.alchemy.com/v2/z_ZWlsOXWnNNXqo9hveLbeX4QDNycdA9",
+      });
+      const contAddress =
+        "0x0702d897706745e4f58cfa0a73e28f663bbaf8d1d0022741ec25ebdd4fb4766d";
+      const ContAbi = await provider.getClassAt(contAddress);
+      const newContract = new Contract(
+        ContAbi.abi,
+        contAddress,
+        connection.account
+      );
+      const address = connection.account.address;
+
+      console.log("contract details", newContract);
+      const response = await newContract.get(address);
+      const _decodedname = feltToString(toBN(response.toString()));
+
+      console.log(">> firstresponse", _decodedname);
+      return true;
+    } catch (error) {
+      console.log("error", error);
+      return false;
+    }
+  };
   const navigation = [
     { name: "How it works", href: "/" },
     { name: "Marketplace", href: "/" },
@@ -25,7 +93,7 @@ function Navbar() {
       const connection = await connect({
         modalMode: "neverAsk",
         webWalletUrl: WW_URL,
-      }); // try to reconnect to a previously used wallet
+      });
 
       if (connection && connection.isConnected) {
         setConnection(connection);
@@ -34,11 +102,11 @@ function Navbar() {
     connectToStarknet();
   }, []);
 
-  useEffect(() => {
-    if (connection) {
-      navigate("/lobby");
-    }
-  }, [connection]);
+  // useEffect(() => {
+  //   if (connection) {
+  //     navigate("/lobby");
+  //   }
+  // }, [connection]);
   return (
     <div className="bg-[#1F1D29] text-white">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -62,6 +130,7 @@ function Navbar() {
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
+
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
               <Link
