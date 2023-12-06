@@ -84,6 +84,7 @@ html {
   .l-wrapper {
     width: 100%;
     max-width: 960px;
+    background-color: #000000;
     margin: auto;
     padding: 1.6rem 1.6rem 3.2rem;
   }

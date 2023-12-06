@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./../styles/result.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import Navbar from "./Navbar";
+import HideNav from "./HideNav";
 import { Link } from "react-router-dom";
 import { Contract, RpcProvider } from "starknet";
 import { feltToString, stringToFelt } from "../../config/util";
@@ -180,8 +180,8 @@ const Result = () => {
 
   return (
     <>
-      <Navbar />
-      <div className=" bg-[#101010] text-white min-h-screen z-96 l-wrapper">
+      <HideNav />
+      <div className=" bg-[#101010]  text-white min-h-screen z-96 l-wrapper">
         <div className="c-header">
           {/* <img
             className="c-logo"
