@@ -85,7 +85,7 @@ function Navbar() {
       });
 
       if (connection && connection.isConnected && connection.account) {
-        setConnection(connection);
+        // setConnection(connection);
 
         dispatch(
           setConnectionDetails({

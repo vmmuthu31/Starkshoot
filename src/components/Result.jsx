@@ -8,12 +8,12 @@ const Result = () => {
   const someValue = useSelector((state) => state.yourSlice.someValue);
   const [applyed, setApplyed] = useState(false);
   const [myrank, setrank] = useState(false);
-  try {
-    var a = someValue[0].id;
-  } catch (e) {
-    alert("Redirecting to lobby...!");
-    window.location.replace("/");
-  }
+  // try {
+  //   var a = someValue[0].id;
+  // } catch (e) {
+  //   alert("Redirecting to lobby...!");
+  //   window.location.replace("/");
+  // }
   useEffect(() => {
     setApplyed(true);
     var team = someValue.map((someValue, index) => {
