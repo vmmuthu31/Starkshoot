@@ -1,30 +1,42 @@
 import React from "react";
-import profile from "../../assets/profile.png";
-import homedop from "../../assets/homedop.png";
-import homebg from "../../assets/homebg.png";
-import diamond from "../../assets/diamond.png";
-import coin from "../../assets/coin.png";
-import map from "../../assets/map.png";
-import shop from "../../assets/shop.png";
-import award from "../../assets/award.png";
-import packagebox from "../../assets/packagebox.png";
-import message from "../../assets/message.png";
+import profile from "../../public/assets/profile.png";
+import homedop from "../../public/assets/homedop.png";
+import homebg from "../../public/assets/homebg.png";
+import diamond from "../../public/assets/diamond.png";
+import coin from "../../public/assets/coin.png";
+import map from "../../public/assets/map.png";
+import shop from "../../public/assets/shop.png";
+import award from "../../public/assets/award.png";
+import packagebox from "../../public/assets/packagebox.png";
+import message from "../../public/assets/message.png";
 import Link from "next/link";
 
 function Lobby() {
   return (
-    <div className="bg-[url('../../assets/homebg.png')] min-h-screen  bg-no-repeat bg-cover">
+    <div className="bg-[url('../../public/assets/homebg.png')] min-h-screen  bg-no-repeat bg-cover">
       <div className="flex items-center space-x-11 text-white text-xl mx-20 py-8">
         <div className="flex homeprofilebg px-3 py-2 items-center space-x-3">
-          <img src="../../assets/profile.png" className="h-12 w-auto" alt="" />
+          <img
+            src="../../public/assets/profile.png"
+            className="h-12 w-auto"
+            alt=""
+          />
           <p>Prashantexe</p>
         </div>
         <div className="flex items-center space-x-2">
-          <img src="../../assets/coin.png" alt="" className="h-8 w-auto" />
+          <img
+            src="../../public/assets/coin.png"
+            alt=""
+            className="h-8 w-auto"
+          />
           <p>415</p>
         </div>
         <div className="flex items-center space-x-2">
-          <img src="../../assets/diamond.png" alt="" className="h-8 w-auto" />
+          <img
+            src="../../public/assets/diamond.png"
+            alt=""
+            className="h-8 w-auto"
+          />
           <p>98 +</p>
         </div>
       </div>
@@ -32,16 +44,24 @@ function Lobby() {
         <div>
           <div className="homebox mt-20 px-16 py-10">
             <div className="flex items-center space-x-5">
-              <img src="../../assets/shop.png" alt="" className="h-8 w-auto" />
+              <img
+                src="../../public/assets/shop.png"
+                alt=""
+                className="h-8 w-auto"
+              />
               <p>Store</p>
             </div>
             <div className="flex items-center my-5 space-x-5">
-              <img src="../../assets/award.png" alt="" className="h-8 w-auto" />
+              <img
+                src="../../public/assets/award.png"
+                alt=""
+                className="h-8 w-auto"
+              />
               <p>Luck Royale</p>
             </div>
             <div className="flex items-center space-x-5">
               <img
-                src="../../assets/packagebox.png"
+                src="../../public/assets/packagebox.png"
                 alt=""
                 className="h-8 w-auto"
               />
@@ -52,7 +72,7 @@ function Lobby() {
         <div className="mt-56 ">
           <div className="flex mapbox px-6 py-3 items-center space-x-5">
             <img
-              src="../../assets/packagebox.png"
+              src="../../public/assets/packagebox.png"
               alt=""
               className="h-8 w-auto"
             />
@@ -60,7 +80,7 @@ function Lobby() {
           </div>
           <div className="">
             <img
-              src="../../assets/homedop.png"
+              src="../../public/assets/homedop.png"
               className="h-40 w-auto"
               alt=""
             />

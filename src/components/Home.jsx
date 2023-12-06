@@ -1,28 +1,12 @@
 import Image from "next/image";
 import Navbar from "./Navbar";
-import joystick from "../../assets/joystick.png";
-import side2 from "../../assets/side2.png";
-import star from "../../assets/star.png";
-import star1 from "../../assets/star1.png";
-import star2 from "../../assets/star2.png";
-import star3 from "../../assets/star3.png";
-import star4 from "../../assets/star4.png";
-import arrow1 from "../../assets/arrow1.png";
-import arrow2 from "../../assets/arrow2.png";
-import arrow3 from "../../assets/arrow3.png";
-import arrow4 from "../../assets/arrow4.png";
-import art1 from "../../assets/art1.png";
-import art2 from "../../assets/art2.png";
-import art3 from "../../assets/art3.png";
-import art4 from "../../assets/art4.png";
-import bro from "../../assets/bro.png";
-import sidebro from "../../assets/sidebro.png";
+
 import { MdArrowOutward } from "react-icons/md";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="bg-[url('../../assets/BG.png')]   bg-contain bg-no-repeat text-white min-h-screen">
+    <main className="bg-[url('../../public/assets/BG.png')]   bg-contain bg-no-repeat text-white min-h-screen">
       <div className="bg-black min-h-screen ">
         <Navbar />
         <div className="pt-28">
@@ -44,7 +28,7 @@ export default function Home() {
               </p>
             </div>
             <div className="mt-5 flex justify-center space-x-4">
-              <img src="../../assets/joystick.png" alt="" />
+              <img src="../../public/assets/joystick.png" alt="" />
               <div className="flex flex-col space-y-2">
                 <p>
                   o<span className="text-[#9FC610]">f</span> Ga
@@ -59,21 +43,25 @@ export default function Home() {
                 </div>
               </div>
               <img
-                src="../../assets/side2.png"
+                src="../../public/assets/side2.png"
                 alt=""
                 className="w-auto h-32"
               />
             </div>
           </div>
           <div className="flex justify-end mx-10">
-            <img src="../../assets/star1.png" className="h-24 w-auto" alt="" />
             <img
-              src="../../assets/star2.png"
+              src="../../public/assets/star1.png"
+              className="h-24 w-auto"
+              alt=""
+            />
+            <img
+              src="../../public/assets/star2.png"
               alt=""
               className="h-12 mt-16 w-auto"
             />
             <img
-              src="../../assets/star3.png"
+              src="../../public/assets/star3.png"
               alt=""
               className="h-8 mt-8 w-auto"
             />
@@ -84,7 +72,7 @@ export default function Home() {
             <div>
               <img
                 className="h-10 mt-2 w-auto"
-                src="../../assets/star4.png"
+                src="../../public/assets/star4.png"
                 alt=""
               />
             </div>
@@ -107,7 +95,11 @@ export default function Home() {
             </div>
           </div>
           <div className="border-2 border-[#9FC610] flex flex-col space-y-3 items-center border-r-8 border-b-4 px-16 py-10 rounded-full">
-            <img src="../../assets/star1.png" alt="" className="h-12 w-auto" />
+            <img
+              src="../../public/assets/star1.png"
+              alt=""
+              className="h-12 w-auto"
+            />
             <p className="text-xl text-center">
               Blockchain
               <br />
@@ -121,7 +113,7 @@ export default function Home() {
           <div className="mt-24">
             <div className="border-2 border-[#9FC610] flex flex-col space-y-3 items-center border-r-8 border-b-4 px-16 py-10 rounded-full">
               <img
-                src="../../assets/star1.png"
+                src="../../public/assets/star1.png"
                 alt=""
                 className="h-12 w-auto"
               />
@@ -137,7 +129,7 @@ export default function Home() {
           <div className="mt-16">
             <div className="border-2 border-[#9FC610] flex flex-col space-y-3 items-center border-r-8 border-b-4 px-16 py-10 rounded-full">
               <img
-                src="../../assets/star1.png"
+                src="../../public/assets/star1.png"
                 alt=""
                 className="h-12 w-auto"
               />
@@ -153,7 +145,7 @@ export default function Home() {
           <div>
             <div className="border-2 border-[#9FC610] flex flex-col space-y-3 items-center border-r-8 border-b-4 px-16 py-10 rounded-full">
               <img
-                src="../../assets/star1.png"
+                src="../../public/assets/star1.png"
                 alt=""
                 className="h-12 w-auto"
               />
@@ -168,10 +160,10 @@ export default function Home() {
           </div>
         </div>
         <div className=" flex justify-end mx-10">
-          <img src="../../assets/star.png" alt="" />
+          <img src="../../public/assets/star.png" alt="" />
         </div>
         <div className="flex mx-40 space-x-4 items-center">
-          <img src="../../assets/star4.png" alt="" />
+          <img src="../../public/assets/star4.png" alt="" />
           <p className="text-4xl font-bold">How it Works?</p>
         </div>
         <div className="flex mt-10 justify-center space-x-3">
@@ -185,14 +177,14 @@ export default function Home() {
               <div>
                 <img
                   className="h-8 absolute mt-10   w-auto"
-                  src="../../assets/art1.png"
+                  src="../../public/assets/art1.png"
                   alt=""
                 />
               </div>
             </div>
           </div>
           <img
-            src="../../assets/arrow1.png"
+            src="../../public/assets/arrow1.png"
             className="w-auto h-32 mt-20"
             alt=""
           />
@@ -206,13 +198,17 @@ export default function Home() {
               <div>
                 <img
                   className="h-8 absolute mt-10   w-auto"
-                  src="../../assets/art2.png"
+                  src="../../public/assets/art2.png"
                   alt=""
                 />
               </div>
             </div>
           </div>
-          <img src="../../assets/arrow4.png" className="w-20 h-24 " alt="" />
+          <img
+            src="../../public/assets/arrow4.png"
+            className="w-20 h-24 "
+            alt=""
+          />
           <div>
             <div className="border-2 border-[#9FC610] flex flex-col space-y-3 items-center border-r-8 border-b-4 px-8 py-14 rounded-full">
               <p className="text-xl text-center">
@@ -223,19 +219,27 @@ export default function Home() {
               <div>
                 <img
                   className="h-8 absolute mt-10   w-auto"
-                  src="../../assets/art3.png"
+                  src="../../public/assets/art3.png"
                   alt=""
                 />
               </div>
             </div>
           </div>
-          <img src="../../assets/arrow3.png" alt="" />
+          <img src="../../public/assets/arrow3.png" alt="" />
         </div>
         <div className="flex mx-52   justify-between space-x-3">
-          <img className="h-60 w-auto" src="../../assets/bro.png" alt="" />
+          <img
+            className="h-60 w-auto"
+            src="../../public/assets/bro.png"
+            alt=""
+          />
 
           <div className="flex space-x-2">
-            <img src="../../assets/arrow2.png" className="h-60 w-auto" alt="" />
+            <img
+              src="../../public/assets/arrow2.png"
+              className="h-60 w-auto"
+              alt=""
+            />
             <div>
               <div className="border-2 border-[#9FC610] flex flex-col space-y-3 items-center border-r-8 border-b-4 px-8 py-14 rounded-full">
                 <p className="text-xl text-center">
@@ -265,7 +269,7 @@ export default function Home() {
               <div>
                 <img
                   className="h-10 absolute mt-10   w-auto"
-                  src="../../assets/art4.png"
+                  src="../../public/assets/art4.png"
                   alt=""
                 />
               </div>
@@ -273,7 +277,7 @@ export default function Home() {
           </div>
           <div>
             <img
-              src="../../assets/sidebro.png"
+              src="../../public/assets/sidebro.png"
               className="ml-20 mt-20"
               alt=""
             />
