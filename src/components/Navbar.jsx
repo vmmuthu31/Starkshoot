@@ -7,11 +7,14 @@ import Link from "next/link";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { WalletDetails } from "./WalletDetails";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const WW_URL = "https://web.argent.xyz";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [connection, setConnection] = useState();
+  const navigate = useNavigate();
+
   const navigation = [
     { name: "How it works", href: "/" },
     { name: "Marketplace", href: "/" },
@@ -31,6 +34,11 @@ function Navbar() {
     connectToStarknet();
   }, []);
 
+  useEffect(() => {
+    if (connection) {
+      navigate("/lobby");
+    }
+  }, [connection]);
   return (
     <div className="bg-[#1F1D29] text-white">
       <header className="absolute inset-x-0 top-0 z-50">
