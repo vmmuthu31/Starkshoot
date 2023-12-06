@@ -6,6 +6,10 @@
   width: 100vw;
   height: 100vh;
 }
+.root2 {
+  width: 60vw;
+  height: 100vh;
+}
 
 body {
   margin: 0;

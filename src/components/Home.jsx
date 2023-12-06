@@ -1,10 +1,57 @@
 import Image from "next/image";
 import Navbar from "./Navbar";
-
+import { useNavigate } from "react-router-dom";
 import { MdArrowOutward } from "react-icons/md";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { Contract, RpcProvider } from "starknet";
+import { feltToString, stringToFelt } from "../../config/util";
 
 export default function Home() {
+  const connection = useSelector((state) => state.connection);
+
+  console.log("Provider:", connection?.provider);
+  console.log("Address:", connection?.address);
+
+  const navigateTo = useNavigate();
+
+  const registerusr = async () => {
+    console.log(">> interactWithContract started");
+    try {
+      const provider = new RpcProvider({
+        nodeUrl:
+          "https://starknet-goerli.g.alchemy.com/v2/z_ZWlsOXWnNNXqo9hveLbeX4QDNycdA9",
+      });
+      const contAddress =
+        "0x0137309735dc51785ec0e0be1553448a44111b4c0e98ab48148c8b2635323f72";
+      const ContAbi = await provider.getClassAt(contAddress);
+      const newContract = new Contract(
+        ContAbi.abi,
+        contAddress,
+        connection?.provider
+      );
+
+      const address = connection?.address;
+
+      const value = {
+        level: 10,
+        playerSkin: stringToFelt("blue"),
+        gun: stringToFelt("Military"),
+        car: stringToFelt("Lamboguni"),
+        skin: stringToFelt("white"),
+      };
+      console.log("contract details", newContract);
+      const response = await newContract.register_user(address, value);
+      console.log(">> firstresponse", response);
+      if (response) {
+        navigateTo("/lobby");
+      }
+      return true;
+    } catch (error) {
+      console.log("error", error);
+      return false;
+    }
+  };
   return (
     <main className="bg-[url('../../public/assets/BG.png')]   bg-contain bg-no-repeat text-white min-h-screen">
       <div className="bg-black min-h-screen ">
@@ -35,11 +82,12 @@ export default function Home() {
                   <span className="text-[#9FC610]">m</span>ing
                 </p>
                 <div className="">
-                  <Link href="/lobby">
-                    <button className="border-2 w-60 rounded-full border-l-8 py-2 px-3 border-[#9FC610] text-4xl">
-                      Play Now!!
-                    </button>
-                  </Link>
+                  <button
+                    onClick={registerusr}
+                    className="border-2 w-60 rounded-full border-l-8 py-2 px-3 border-[#9FC610] text-4xl"
+                  >
+                    Play Now!!
+                  </button>
                 </div>
               </div>
               <img

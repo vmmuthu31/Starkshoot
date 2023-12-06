@@ -10,9 +10,15 @@ import { WalletDetails } from "./WalletDetails";
 import { useNavigate } from "react-router-dom";
 import { Contract, RpcProvider } from "starknet";
 import { feltToString, stringToFelt } from "../../config/util";
+// import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setConnectionDetails } from "../../slices/connectionReducer";
 
 function Navbar() {
   const WW_URL = "https://web.argent.xyz";
+  const navigateTo = useNavigate();
+  const dispatch = useDispatch();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   function toBN(value) {
@@ -25,8 +31,8 @@ function Navbar() {
   }
 
   const [connection, setConnection] = useState();
-  const navigate = useNavigate();
-  const setaddr = async () => {
+  // const navigate = useNavigate();
+  const registerusr = async () => {
     console.log(">> interactWithContract started");
     try {
       const provider = new RpcProvider({
@@ -34,7 +40,7 @@ function Navbar() {
           "https://starknet-goerli.g.alchemy.com/v2/z_ZWlsOXWnNNXqo9hveLbeX4QDNycdA9",
       });
       const contAddress =
-        "0x0702d897706745e4f58cfa0a73e28f663bbaf8d1d0022741ec25ebdd4fb4766d";
+        "0x0137309735dc51785ec0e0be1553448a44111b4c0e98ab48148c8b2635323f72";
       const ContAbi = await provider.getClassAt(contAddress);
       const newContract = new Contract(
         ContAbi.abi,
@@ -43,51 +49,34 @@ function Navbar() {
       );
 
       const address = connection.account.address;
-      const name = "Vairamuthu";
-      const value = stringToFelt(name);
+
+      const value = {
+        level: 200,
+        playerSkin: stringToFelt("blue"),
+        gun: stringToFelt("Military"),
+        car: stringToFelt("Lamboguni"),
+        skin: stringToFelt("white"),
+      };
 
       console.log("contract details", newContract);
-      const response = await newContract.set(address, value);
+
+      const response = await newContract.register_user(address, value);
+
       console.log(">> firstresponse", response);
+      if (response) {
+        navigateTo("/lobby");
+      }
       return true;
     } catch (error) {
       console.log("error", error);
       return false;
     }
   };
-  const getaddr = async () => {
-    console.log(">> interactWithContract started");
-    try {
-      const provider = new RpcProvider({
-        nodeUrl:
-          "https://starknet-goerli.g.alchemy.com/v2/z_ZWlsOXWnNNXqo9hveLbeX4QDNycdA9",
-      });
-      const contAddress =
-        "0x0702d897706745e4f58cfa0a73e28f663bbaf8d1d0022741ec25ebdd4fb4766d";
-      const ContAbi = await provider.getClassAt(contAddress);
-      const newContract = new Contract(
-        ContAbi.abi,
-        contAddress,
-        connection.account
-      );
-      const address = connection.account.address;
 
-      console.log("contract details", newContract);
-      const response = await newContract.get(address);
-      const _decodedname = feltToString(toBN(response.toString()));
-
-      console.log(">> firstresponse", _decodedname);
-      return true;
-    } catch (error) {
-      console.log("error", error);
-      return false;
-    }
-  };
   const navigation = [
     { name: "How it works", href: "/" },
     { name: "Marketplace", href: "/" },
   ];
-
   useEffect(() => {
     const connectToStarknet = async () => {
       const connection = await connect({
@@ -95,12 +84,21 @@ function Navbar() {
         webWalletUrl: WW_URL,
       });
 
-      if (connection && connection.isConnected) {
+      if (connection && connection.isConnected && connection.account) {
         setConnection(connection);
+
+        dispatch(
+          setConnectionDetails({
+            provider: connection.account,
+            address: connection.account.address,
+          })
+        );
       }
     };
     connectToStarknet();
   }, []);
+
+  // }, []);
 
   // useEffect(() => {
   //   if (connection) {
@@ -142,15 +140,18 @@ function Navbar() {
               </Link>
             ))}
           </div>
+
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <div className="flex md:flex-row flex-col items-center justify-center md:space-y-0 md:space-x-4 space-y-4">
               {!connection ? (
                 <>
-                  <Link href="/lobby">
-                    <button className="herobtn px-6 py-3 text-lg font-semibold text-black ">
-                      Play Now!
-                    </button>
-                  </Link>
+                  <button
+                    onClick={registerusr}
+                    className="herobtn px-6 py-3 text-lg font-semibold text-black "
+                  >
+                    Play Now!
+                  </button>
+
                   <button
                     onClick={async () => {
                       const connection = await connect({
