@@ -56,6 +56,9 @@ In the upcoming releases, we are excited to announce the integration of DOJO, a 
 
 ![WhatsApp Image 2023-12-07 at 12 50 19_27a58adf](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/62c2ce1a-1c68-4e48-93d3-dbfd0e3b5f64)
 
+![WhatsApp Image 2023-12-07 at 12 58 18_7d34e915](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/209f8aab-b697-4a13-819d-39db6ba134c8)
+
+
 ## Getting Started
 
 Getting started with StarkShoot is a breeze:
