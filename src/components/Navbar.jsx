@@ -115,7 +115,9 @@ function Navbar() {
           <div className="flex space-x-4 lg:flex-1">
             <Link href="/" className="flex space-x-4">
               <img className="h-16 w-auto" src="../../assets/logo.png" alt="" />
-              <p className=" text-3xl font-bold font-serif mt-2">STARKSHOOT</p>
+              <p className=" text-xl mt-5 md:mt-2 md:text-2xl font-bold font-serif ">
+                STARKSHOOT
+              </p>
             </Link>
           </div>
           <div className="flex lg:hidden">
@@ -197,7 +199,7 @@ function Navbar() {
             <div className="flex items-center justify-between">
               <Link href="/" className="flex space-x-4">
                 <Image className="h-12 w-auto" src={logo} alt="" />
-                <p className=" text-2xl font-bold font-serif mt-2">
+                <p className=" text-lg md:text-2xl font-bold font-serif mt-2">
                   STARKSHOOT
                 </p>
               </Link>
