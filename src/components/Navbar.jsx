@@ -198,8 +198,12 @@ function Navbar() {
           <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex space-x-4">
-                <Image className="h-12 w-auto" src={logo} alt="" />
-                <p className=" text-lg md:text-2xl font-bold font-serif mt-2">
+                <img
+                  className="h-12 w-auto"
+                  src="../../assets/logo.png"
+                  alt=""
+                />
+                <p className=" text-lg md:text-2xl text-gray-200 font-bold font-serif mt-2">
                   STARKSHOOT
                 </p>
               </Link>
@@ -219,7 +223,7 @@ function Navbar() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-200"
                     >
                       {item.name}
                     </Link>
