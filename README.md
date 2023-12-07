@@ -1,14 +1,40 @@
+# StarkShoot: Redefining Gaming Excellence on the Starknet Chain
 
-## Setup
+## Overview
+
+Welcome to StarkShoot, a groundbreaking multiplayer real-world onchain gaming experience that pushes the boundaries of excitement and innovation. Powered by the Starknet chain, StarkShoot is not just a game; it's a journey into the future of gaming where every moment is infused with intensity and every victory is a triumph worth celebrating.
+
+### Elevate Your Gaming Experience
+
+StarkShoot brings a fusion of cutting-edge features designed to immerse players in a gaming universe like never before. From dynamic PvP thrills to exclusive NFT rewards, every aspect of StarkShoot is meticulously crafted to provide an unparalleled gaming adventure.
+
+## Features
+
+### 1. Epic PvP Thrills
+
+Embark on intense multiplayer showdowns with StarkShoot's diverse selection of avatars, each endowed with unique abilities. Engage in strategic battles, outwit your opponents, and emerge as the ultimate warrior in heart-pounding confrontations.
+
+### 2. NFT Triumphs Await
+
+Achieve glory as you climb the leaderboards by securing the highest kill count. StarkShoot transforms victories into more than just a score; each triumph is rewarded with exclusive NFTs, adding tangible value to your conquests and creating a digital legacy.
+
+### 3. Blockchain Realism
+
+Immerse yourself in the next level of gaming realism with StarkShoot's cutting-edge blockchain technology. From lifelike graphics to seamless gameplay, every detail is crafted to provide an authentic and immersive gaming environment.
+
+### 4. Dynamic Timer-driven Challenges
+
+Experience the adrenaline rush of dynamic, timer-driven challenges that push your skills to the limit. Navigate through time-sensitive battles, test your strategy against the clock, and elevate your gaming adventure with thrilling and unpredictable scenarios.
+
+### Screenshot
+
+![image](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/94a4d6fd-8de3-4436-8844-7d5e5a823e7a)
+
+![image](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/f1931650-34c5-48bd-afe9-4e1b490f66f4)
+
+![image](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/052d2016-14ac-427b-a639-a2f18179c50a)
+
+![image](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/e343d3f4-f035-49e2-90f4-e98193cc5cea)
 
 
-Install the dependencies and start the development server with
-```
-yarn
-yarn dev
-```
 
-To have it accessible from your mobile run
-```
-yarn dev --host
-```
