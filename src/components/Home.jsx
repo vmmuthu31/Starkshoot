@@ -57,7 +57,7 @@ export default function Home() {
       <div className="bg-black min-h-screen ">
         <Navbar />
         <div className="pt-28">
-          <div className="text-center font-bold pt-10 font-serif  text-xl   md:text-9xl">
+          <div className="text-center font-bold pt-5 md:pt-10 font-serif  text-xl   md:text-9xl">
             <p>
               Un<span className="text-[#9FC610]">l</span>eash
               <span className="text-[#9FC610]"> t</span>he fut
@@ -70,7 +70,7 @@ export default function Home() {
                 </p>
                 <p className="border-t-2 mt-3 w-5  md:w-80   border-[#9FC610]  "></p>
               </div>
-              <p className="md:text-4xl text-xl text-[#9FC610] pt-5 font-serif ml-12">
+              <p className="md:text-4xl text-md md:mt-0 mt-2 text-[#9FC610] pt-5 font-serif md:ml-12">
                 join us
               </p>
             </div>
