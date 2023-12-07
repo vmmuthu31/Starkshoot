@@ -30,9 +30,7 @@ export default function Home() {
         contAddress,
         connection?.provider
       );
-
       const address = connection?.address;
-
       const value = {
         level: 10,
         playerSkin: stringToFelt("blue"),
