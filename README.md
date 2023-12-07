@@ -26,7 +26,7 @@ Immerse yourself in the next level of gaming realism with StarkShoot's cutting-e
 
 Experience the adrenaline rush of dynamic, timer-driven challenges that push your skills to the limit. Navigate through time-sensitive battles, test your strategy against the clock, and elevate your gaming adventure with thrilling and unpredictable scenarios.
 
-### Stacks
+## Stacks
 
 -> Nextjs
 -> Cairo
@@ -38,13 +38,13 @@ Experience the adrenaline rush of dynamic, timer-driven challenges that push you
 -> Redux
 -> Git 
 
-### Future Roadmap
+## Future Roadmap
 We are committed to enhancing StarkShoot's on-chain gaming experience. Here's a glimpse of our future roadmap:
 
 ### Integration of DOJO
 In the upcoming releases, we are excited to announce the integration of DOJO, a powerful tool that will elevate StarkShoot's gameplay by providing enhanced analytics, security features, and performance optimizations. Stay tuned for updates on how DOJO will take StarkShoot to new heights.
 
-### Screenshot
+## Screenshot
 
 ![image](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/94a4d6fd-8de3-4436-8844-7d5e5a823e7a)
 
