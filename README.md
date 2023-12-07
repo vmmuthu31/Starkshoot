@@ -54,5 +54,15 @@ In the upcoming releases, we are excited to announce the integration of DOJO, a 
 
 ![image](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/e343d3f4-f035-49e2-90f4-e98193cc5cea)
 
+![WhatsApp Image 2023-12-07 at 12 50 19_27a58adf](https://github.com/vmmuthu31/Starkshoot-Dev/assets/111880621/62c2ce1a-1c68-4e48-93d3-dbfd0e3b5f64)
 
+## Getting Started
 
+Getting started with StarkShoot is a breeze:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your-username/StarkShoot.git
+2. Install Dependencies
+  ```bash
+    npm install
