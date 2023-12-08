@@ -19,6 +19,7 @@ import {
   useStoreMessages,
   useFilterMessages,
 } from "@waku/react";
+import protobuf from "protobufjs";
 
 const ChatMessage = new protobuf.Type("ChatMessage")
   .add(new protobuf.Field("timestamp", 1, "uint64"))
