@@ -94,7 +94,6 @@ export const Experience = ({ downgradedPerformance = false }) => {
 
   const start = async () => {
     await insertCoin();
-
     onPlayerJoin(async (state) => {
       const joystick = new Joystick(state, {
         type: "angular",
