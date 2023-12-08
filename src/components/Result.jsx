@@ -7,13 +7,17 @@ import { Link } from "react-router-dom";
 import { Contract, RpcProvider } from "starknet";
 import { feltToString, stringToFelt } from "../../config/util";
 import { useNavigate } from "react-router-dom";
+import { ContentPairProvider, useWaku } from "@waku/react";
+import Loading from "./Loading";
 
 const Result = () => {
   const connection = useSelector((state) => state.connection);
-
+  const { isLoading } = useWaku();
   console.log("Provider:", connection?.provider);
   console.log("Address:", connection?.address);
-
+  if (isLoading) {
+    return <Loading />;
+  }
   const navigateTo = useNavigate();
   useEffect(() => {
     const registerusr = async () => {
@@ -57,6 +61,8 @@ const Result = () => {
 
   // const someValue = JSON.parse(localStorage.getItem('myObject'));
   const someValue = useSelector((state) => state.yourSlice.someValue);
+
+  const room = someValue[0].id;
   const [applyed, setApplyed] = useState(false);
   const [myrank, setrank] = useState(false);
   // try {
@@ -180,73 +186,75 @@ const Result = () => {
 
   return (
     <>
-      <HideNav />
-      <div className=" bg-[#101010]  text-white min-h-screen z-96 l-wrapper">
-        <div className="c-header">
-          {/* <img
+      <ContentPairProvider contentTopic={"/BlockBattle/" + room}>
+        <HideNav />
+        <div className=" bg-[#101010]  text-white min-h-screen z-96 l-wrapper">
+          <div className="c-header">
+            {/* <img
             className="c-logo"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/813538/km-logo-color.svg"
             draggable="false"
             /> */}
-          <button className="c-button c-button--primary">
-            <a href="lobby">Lobby</a>
-          </button>
-        </div>
-        <div className="l-grid">
-          <div className="l-grid__item l-grid__item--sticky">
-            <div className="c-card u-bg--light-gradient u-text--dark">
-              <div className="c-card__body">
-                <div className="u-display--flex u-justify--space-between">
-                  <div className="u-text--left">
-                    <div className="u-text--small">Room</div>
-                    <h1>{someValue[0].id}</h1>
-                  </div>
-                  <div className="u-text--right">
-                    <div className="u-text--small">Total bedding</div>
-                    <h2>
-                      {someValue.kills}/{someValue.deaths}
-                    </h2>
+            <button className="c-button c-button--primary">
+              <a href="lobby">Lobby</a>
+            </button>
+          </div>
+          <div className="l-grid">
+            <div className="l-grid__item l-grid__item--sticky">
+              <div className="c-card u-bg--light-gradient u-text--dark">
+                <div className="c-card__body">
+                  <div className="u-display--flex u-justify--space-between">
+                    <div className="u-text--left">
+                      <div className="u-text--small">Room</div>
+                      <h1>{someValue[0].id}</h1>
+                    </div>
+                    <div className="u-text--right">
+                      <div className="u-text--small">Total bedding</div>
+                      <h2>
+                        {someValue.kills}/{someValue.deaths}
+                      </h2>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="c-card">
-              <div className="c-card__body">
-                <div className="u-text--center" id="winner" />
+              <div className="c-card">
+                <div className="c-card__body">
+                  <div className="u-text--center" id="winner" />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="l-grid__item">
-            <div className="c-card">
-              <div className="c-card__header">
-                <h3>Rank</h3>
-                <select className="c-select">
-                  <option selected="selected">
-                    RoomId : {someValue[0].id}
-                  </option>
-                </select>
-              </div>
-              <div className="c-card__body">
-                <ul className="c-list" id="list">
-                  <li className="c-list__item">
-                    <div className="c-list__grid">
-                      <div className="u-text--left u-text--small u-text--medium">
-                        Rank
+            <div className="l-grid__item">
+              <div className="c-card">
+                <div className="c-card__header">
+                  <h3>Rank</h3>
+                  <select className="c-select">
+                    <option selected="selected">
+                      RoomId : {someValue[0].id}
+                    </option>
+                  </select>
+                </div>
+                <div className="c-card__body">
+                  <ul className="c-list" id="list">
+                    <li className="c-list__item">
+                      <div className="c-list__grid">
+                        <div className="u-text--left u-text--small u-text--medium">
+                          Rank
+                        </div>
+                        <div className="u-text--left u-text--small u-text--medium">
+                          Name
+                        </div>
+                        <div className="u-text--right u-text--small u-text--medium">
+                          # Kills/Deaths
+                        </div>
                       </div>
-                      <div className="u-text--left u-text--small u-text--medium">
-                        Name
-                      </div>
-                      <div className="u-text--right u-text--small u-text--medium">
-                        # Kills/Deaths
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ContentPairProvider>
     </>
   );
 };
