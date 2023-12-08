@@ -12,17 +12,90 @@ import { Bullet } from "./Bullet";
 import { BulletHit } from "./BulletHit";
 import { CharacterController } from "./CharacterController";
 import { Map } from "./Map";
+import {
+  useWaku,
+  useContentPair,
+  useLightPush,
+  useStoreMessages,
+  useFilterMessages,
+} from "@waku/react";
+
+const ChatMessage = new protobuf.Type("ChatMessage")
+  .add(new protobuf.Field("timestamp", 1, "uint64"))
+  .add(new protobuf.Field("sender", 2, "string"))
+  .add(new protobuf.Field("message", 3, "string"));
 
 export const Experience = ({ downgradedPerformance = false }) => {
   const [players, setPlayers] = useState([]);
+  const { node } = useWaku();
+  const { decoder, encoder } = useContentPair();
+  const { messages: storeMessages } = useStoreMessages({
+    node,
+    decoder,
+  });
+  const { messages: filterMessages } = useFilterMessages({ node, decoder });
+
+  const { push } = useLightPush({ node, encoder });
+  async function sendMessage(sender, message) {
+    const protoMessage = ChatMessage.create({
+      timestamp: Date.now(),
+      sender,
+      message,
+    });
+
+    const serialisedMessage = ChatMessage.encode(protoMessage).finish();
+
+    const timestamp = new Date();
+    await push({
+      payload: serialisedMessage,
+      timestamp,
+    });
+
+    console.log("MESSAGE PUSHED");
+  }
+
+  function decodeMessage(wakuMessage) {
+    if (!wakuMessage.payload) return;
+
+    const { timestamp, sender, message } = ChatMessage.decode(
+      wakuMessage.payload
+    );
+
+    if (!timestamp || !sender || !message) return;
+
+    const time = new Date();
+    time.setTime(Number(timestamp));
+
+    return {
+      message,
+      timestamp: time,
+      sender,
+      timestampInt: wakuMessage.timestamp,
+    };
+  }
+  const processMessages = () => {
+    let messages = storeMessages.concat(filterMessages);
+    messages = messages.map(decodeMessage);
+
+    messages.forEach(({ message, sender }) => {
+      if (message.type === "bulletFired") {
+        const bulletData = JSON.parse(message.data);
+        setBullets((currentBullets) => [...currentBullets, bulletData]);
+      } else if (message.type === "bulletHit") {
+        const hitData = JSON.parse(message.data);
+        setHits((currentHits) => [...currentHits, hitData]);
+      }
+    });
+  };
+
+  useEffect(() => {
+    processMessages();
+  }, [storeMessages, filterMessages]);
+
   const start = async () => {
-    // Start the game
     await insertCoin();
 
-    // Create a joystick controller for each joining player
-    onPlayerJoin((state) => {
-      // Joystick will only create UI for current player (myPlayer)
-      // For others, it will only sync their state
+    onPlayerJoin(async (state) => {
       const joystick = new Joystick(state, {
         type: "angular",
         buttons: [
@@ -30,14 +103,36 @@ export const Experience = ({ downgradedPerformance = false }) => {
           { id: "jump", label: "Jump" },
         ],
       });
-      const newPlayer = { state, joystick };
       state.setState("health", 100);
       state.setState("deaths", 0);
       state.setState("kills", 0);
+
+      const newPlayer = {
+        id: state.id,
+        state,
+        joystick,
+        health: 100,
+        deaths: 0,
+        kills: 0,
+      };
+
       setPlayers((players) => [...players, newPlayer]);
+
       state.onQuit(() => {
         setPlayers((players) => players.filter((p) => p.state.id !== state.id));
       });
+
+      const playerJoinedMessage = {
+        id: state.id,
+        health: 100,
+        deaths: 0,
+        kills: 0,
+      };
+
+      await sendMessage(
+        "system",
+        JSON.stringify({ type: "playerJoined", data: playerJoinedMessage })
+      );
     });
   };
 

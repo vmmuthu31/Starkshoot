@@ -4,13 +4,6 @@ import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier";
 import { isHost } from "playroomkit";
 import { useEffect, useRef, useState } from "react";
 import { CharacterSoldier } from "./CharacterSoldier";
-import {
-  useWaku,
-  useContentPair,
-  useLightPush,
-  useStoreMessages,
-  useFilterMessages,
-} from "@waku/react";
 
 const MOVEMENT_SPEED = 202;
 const FIRE_RATE = 380;
@@ -49,6 +42,7 @@ export const CharacterController = ({
   ...props
 }) => {
   const [weapon, setWeapon] = useState("AK");
+
   console.log("useState call :", weapon);
   const group = useRef();
   const character = useRef();
